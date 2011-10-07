@@ -1,0 +1,20 @@
+{
+    "name": "multiuser-sms-simulator",
+    "version": "0.1.1",
+    "directories": {
+        "lib": "./lib"
+    },
+    "description": "Multiuser SMS Simulator for Kodeincloud",
+    "author": "Arunoda Susiripala <arunoda.susiripala@gmail.com>",
+    "homepage": "http://kodeincloud.com",
+    "private": false,
+    "dependencies": {
+        "nodemock": ">= 0.1.13",
+        "horaa": ">= 0.1.1alpha",
+        "winstoon": ">= 0.1.1beta",
+        "express": ">= 2.4.0",
+        "nconf": ">= 0.1.14",
+        "restler": ">= 0.2.1",
+        "mongoskin": ">= 0.1.3"
+     }
+}

@@ -1,0 +1,1 @@
+var AppStore = new require('./lib/appStore');
