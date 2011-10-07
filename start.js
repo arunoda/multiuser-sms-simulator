@@ -29,3 +29,13 @@ simulatorServer.use(express.bodyParser());
 
 simulatorServer.listen(simulatorPort);
 logger.info('Simulator Server started', {port: simulatorPort})
+
+////////////////////////////////////////////////////////////////////
+
+//load SetupMan
+var SetupMan = require('./lib/setupMan');
+var setupMan = new SetupMan(apiServer, appStore);
+
+//load Simulator
+var Simulator = require('./lib/simulator');
+var simulator = new Simulator(simulatorServer, appStore, eventBus);
