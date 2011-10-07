@@ -4,6 +4,8 @@ var Simulator = require('simulator');
 var appzone = require('appzone');
 var express = require('express');
 var rest = require('restler');
+var winstoon = require('winstoon');
+winstoon.add(winstoon.transports.Console);
 
 exports.testAppzoneSendSms = function(test) {
 	
@@ -135,3 +137,84 @@ exports.testAppzoneSendWrongBody = function(test) {
 		});
 	});	
 };
+
+exports.testMODelivery = function(test) {
+	
+	var appStore = new AppStore();
+	var eventBus = new EventEmitter();
+	
+	var receiver = appzone.receiver('8734');
+	receiver.onSms(function(sms) {
+
+		test.equal(sms.address, '072111222');
+		test.equal(sms.version, '1.0');
+		test.equal(sms.message, 'message');
+		test.ok(sms.correlator);
+		setTimeout(function() {
+			receiver.close();
+			test.done();
+		}, 10);
+	});
+
+	var app = express.createServer();
+	app.use(express.bodyParser());
+
+	appStore.saveEntry('app', 'pass', 'http://localhost:8734');
+	var simulator = new Simulator(app, appStore, eventBus);
+
+	setTimeout(function() {
+		eventBus.emit('MO', 'app', '072111222', 'message');
+	}, 10);
+}
+
+exports.testMODeliveryNoApp = function(test) {
+	
+	var appStore = new AppStore();
+	var eventBus = new EventEmitter();
+	
+	var receiver = appzone.receiver('8734');
+	receiver.onSms(function(sms) {
+
+		test.fail();
+	});
+
+	var app = express.createServer();
+	app.use(express.bodyParser());
+
+	appStore.saveEntry('app', 'pass', 'http://localhost:8734');
+	var simulator = new Simulator(app, appStore, eventBus);
+
+	setTimeout(function() {
+		eventBus.emit('MO', 'noApp', '072111222', 'message');
+		setTimeout(function() {
+			receiver.close();
+			test.done();
+		}, 100);
+	}, 10);
+}
+
+exports.testMODeliveryInCorrectURL = function(test) {
+	
+	var appStore = new AppStore();
+	var eventBus = new EventEmitter();
+	
+	var receiver = appzone.receiver('8734');
+	receiver.onSms(function(sms) {
+
+		test.fail();
+	});
+
+	var app = express.createServer();
+	app.use(express.bodyParser());
+
+	appStore.saveEntry('app', 'pass', 'http://localhost:873');
+	var simulator = new Simulator(app, appStore, eventBus);
+
+	setTimeout(function() {
+		eventBus.emit('MO', 'app', '072111222', 'message');
+		setTimeout(function() {
+			receiver.close();
+			test.done();
+		}, 100);
+	}, 10);
+}

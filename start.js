@@ -39,3 +39,19 @@ var setupMan = new SetupMan(apiServer, appStore);
 //load Simulator
 var Simulator = require('./lib/simulator');
 var simulator = new Simulator(simulatorServer, appStore, eventBus);
+
+//Client Handler
+var ClientHandler = require('./lib/clientHandler');
+var clientHandler = new ClientHandler(apiServer, eventBus, apiPort);
+
+// var jqtpl = require('jqtpl');
+// var fs = require('fs');
+// var filename = __dirname + '/views/index.html';
+// var view = fs.readFileSync(filename, 'utf8');
+// console.log(filename);
+// var data = jqtpl.tmpl(view, {port: apiPort});
+// apiServer.get('/view', function(req, res) {
+
+// 	console.log(apiServer);
+// 	res.send(data);
+// });
