@@ -2,11 +2,13 @@
 
 function SMS() {
 	
-	var events = new EventEmitter2();
+	var events = new EventEmitter2({
+		wildcard: true, 
+		maxListeners: 50
+    });
 	/**
 		Send Mobile Originated Message
 	*/
-
 
 	this.sendMo = function sendMo(myAddress, message) {
 		
@@ -29,9 +31,7 @@ function SMS() {
 			//broadcast
 			events.emit('broadcast', message);
 		} else {
-			events.emit(toAddress, message);
+			events.emit('sms.' + toAddress, message);
 		}
 	});
 }
-
-var sms = new SMS();
