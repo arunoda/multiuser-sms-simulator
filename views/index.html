@@ -1,5 +1,8 @@
 <html>
 <head>
+	<link rel="stylesheet" type="text/css" href="/css/main.css" media="screen" />
+	<!-- <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" media="screen" /> -->
+
 	<script src="/socket.io/socket.io.js"></script>
 	<script>
 		var appId = '${appId}';
@@ -9,6 +12,79 @@
 	<script src="/js/main.js"></script>
 </head>
 <body>
+
+<div id='container'>
+	<div id='heading'>
+		<img src='/images/logo.png' align='center'/>
+	</div>
+	<div id='cpanel'>
+		<div id='txtSms'>SMS Log</div>
+		<select id='filterBy'> 
+			<option value='none'>None</option>
+		</select>
+		<div id='txtFilterBy'>Filter By</div>
+		<div style='clear: both'></div>
+	</div>
+
+	<div id='stream'>
+
+		<div class='sms'>
+			<div id='one'>
+				<span id='phoneNo' class='label warning'>To: 0718356873</span>
+				<span id='time' class='label success'>@ 10:43:58</span>
+			</div>
+			<div id='two'>
+				You've been disconnected for a while, You've been disconnected for a while ,
+				You've been disconnected for a while You've been disconnected for a while
+			</div>
+			<div id='three'>
+				<span id='tam' class='label'>text as me</span>
+			</div>
+			<div style='clear: both'></div>
+		</div>
+
+		<div class='sms'>
+			<div id='one'>
+				<span id='phoneNo' class='label important'>From: 0718360974</span>
+				<span id='time' class='label success'>@ 10:45:58</span>
+			</div>
+			<div id='two'>
+				yl hi
+			</div>
+			<div id='three'>
+				<span id='tam' class='label'>text as me</span>
+			</div>
+			<div style='clear: both'></div>
+		</div>
+
+		<div class='sms'>
+			<div id='one'>
+				<span id='phoneNo' class='label notice'>Broadcast</span>
+				<span id='time' class='label success'>@ 10:15:58</span>
+			</div>
+			<div id='two'>
+				this is an broadcast
+			</div>
+			<div id='three'>
+				<span id='tam' class='label'>text as me</span>
+			</div>
+			<div style='clear: both'></div>
+		</div>
+
+	</div>
+
+	<div id='sender'>
+		<div id='phoneNo'>
+			<input type='text'/>
+		</div>
+		<div id='keypad'>
+			<textarea ></textarea>
+		</div>
+		<button id='btnSend'>Send</button>
+		<div style='clear: both'></div>
+	</div>
+
+</div>
 
 </body>
 </html>

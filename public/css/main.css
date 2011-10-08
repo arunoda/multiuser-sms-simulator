@@ -1,0 +1,163 @@
+body {
+	margin: 0px;
+	padding: 0px;
+	font-family: Arial;
+	font-size: 14px;
+	text-align: center;
+}
+
+#container {
+	margin:auto;
+	text-align: left;
+	width: 700px;
+	padding: 20px;
+	background-color: white;
+}
+/********** HEADING */
+
+#heading {
+	padding-bottom: 10px;
+	text-align: center;
+	margin-bottom: 20px;
+	border-bottom: 3px solid rgb(220, 220, 220)
+}
+
+#heading h1 {
+	margin:0px;
+	font-family: 'Arial';
+	color: #FFFFFF;
+	font-size: 27px;
+	font-weight: normal;
+}
+
+/********** CPANEL */
+
+#cpanel {
+	font-size: 20px;
+}
+
+#cpanel #txtSms{
+	float: left;
+}
+
+#cpanel #txtFilterBy{
+	margin:2px 5px 0px 0px;
+	float: right;
+}
+
+#cpanel #filterBy{
+	float: right;
+	margin:0px;
+	padding:0px;
+	font-size: 20px;
+}
+
+/********** STREAM */
+
+#stream {
+	margin: 20px 0px 20px 0px;
+	background-color: #f4f8fc;
+	border: 1px solid rgb(220, 220, 220);
+	padding: 8px;
+	height: 200;
+}
+
+/********** SENDER */
+
+
+#sender #phoneNo input {
+	background-color: rgb(245, 245, 245);
+	border: 1px solid rgb(200, 200, 200);
+	padding: 5px;
+	margin: 0px 0px 10px 0px;
+	font-size: 18px;
+	font-family: 'Arial';
+	color: rgb(75, 75, 75);
+}
+
+#sender #keypad textarea{
+	float: left;
+	height: 55px;
+	width: 580px;
+	background-color: rgb(245, 245, 245);
+	border: 1px solid rgb(200, 200, 200);
+	font-size: 18px;
+	font-family: 'Arial';
+	color: rgb(75, 75, 75);
+}
+
+#sender #btnSend {
+	float: right;
+	height: 55px;
+	width: 100px;
+	font-size: 30px;
+}
+
+/************** SMS */
+
+.sms {
+	margin: 0px 0px 0px 0px;
+	padding-top: 6px;
+	padding-bottom: 8px;
+	border-bottom: 1px solid #cfeaea;
+}
+
+.sms #one {
+	float: left;
+	margin-right: 5px;
+	width: 200px;
+}
+
+/*.sms #one #phoneNo {
+	text-align:center;
+	background-color: #7cd583;
+	padding:2px;
+}*/
+
+
+.sms #two {
+	float: left;
+	width: 400px;
+	color: rgb(75, 75, 75);
+}
+
+.sms #three {
+	float: right;
+}
+
+.sms #tam {
+	cursor: pointer;
+}
+/***** LABEL **/
+
+
+.label {
+
+	padding: 1px 3px 2px;
+	background-color: #bfbfbf;
+	font-size: 12px;
+	font-weight: bold;
+	color: #ffffff;
+	text-transform: uppercase;
+	white-space: nowrap;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+a {
+	text-decoration: none;	
+}
+
+.label.important {
+	background-color: #c43c35;
+}
+.label.warning {
+	background-color: #f89406;
+}
+.label.success {
+	background-color: #46a546;
+}
+.label.notice {
+	background-color: #62cffc;
+}
