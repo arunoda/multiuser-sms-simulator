@@ -159,3 +159,50 @@ function SmsStore(limit) {
 	}
 
 }
+
+/******* STREAM **/
+
+function Stream(streamId, mtDiv, moDiv, broadcatDiv) {
+	
+	streamId = (streamId)? streamId: 'stream';
+	mtDiv = (mtDiv)? mtDiv: 'sms_mt';
+	moDiv = (moDiv)? moDiv: 'sms_mo';
+	broadcatDiv = (broadcatDiv)? broadcatDiv: 'sms_broadcast';
+
+	var filter = null;
+
+	this.addMessage = function(sms) {
+		
+		//do filtering
+		if(sms && sms.address != filter) {
+			
+			if(sms.type == 'MO') {
+
+				var tmpl = $('#' + moDiv).html();
+				var html = Mustache.to_html(tmpl, {
+					address: sms.address,
+					message: sms.message,
+					time: getTimeStr(sms.time)
+				});
+				$('#' + streamId).prepend(html);
+			}
+		}
+	};
+
+	this.clear = function() {
+		$('#' + streamId).empty();
+	};
+
+	this.setFilter = function(address) {
+		filter = address;
+	};
+
+	this.clearFilter = function() {
+		filter = null;
+	};
+
+	function getTimeStr(timestamp) {
+		var d = new Date(timestamp);
+		return d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();	
+	};
+}

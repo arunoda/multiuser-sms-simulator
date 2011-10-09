@@ -62,6 +62,7 @@ body {
 	border: 1px solid rgb(220, 220, 220);
 	padding: 8px;
 	height: 200;
+	overflow: auto;
 }
 
 /********** SENDER */
@@ -119,7 +120,7 @@ body {
 
 .sms #two {
 	float: left;
-	width: 400px;
+	width: 380px;
 	color: rgb(75, 75, 75);
 }
 

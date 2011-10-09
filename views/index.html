@@ -9,6 +9,8 @@
 		var socket = io.connect('http://localhost:${port}');
 	</script>
 	<script src="/js/ev2.js"></script>
+	<script src="/js/mustache.js"></script>
+	<script src="/js/jquery-1.6.4.min.js"></script>
 	<script src="/js/main.js"></script>
 </head>
 <body>
@@ -28,49 +30,6 @@
 
 	<div id='stream'>
 
-		<div class='sms'>
-			<div id='one'>
-				<span id='phoneNo' class='label warning'>To: 0718356873</span>
-				<span id='time' class='label success'>@ 10:43:58</span>
-			</div>
-			<div id='two'>
-				You've been disconnected for a while, You've been disconnected for a while ,
-				You've been disconnected for a while You've been disconnected for a while
-			</div>
-			<div id='three'>
-				<span id='tam' class='label'>text as me</span>
-			</div>
-			<div style='clear: both'></div>
-		</div>
-
-		<div class='sms'>
-			<div id='one'>
-				<span id='phoneNo' class='label important'>From: 0718360974</span>
-				<span id='time' class='label success'>@ 10:45:58</span>
-			</div>
-			<div id='two'>
-				yl hi
-			</div>
-			<div id='three'>
-				<span id='tam' class='label'>text as me</span>
-			</div>
-			<div style='clear: both'></div>
-		</div>
-
-		<div class='sms'>
-			<div id='one'>
-				<span id='phoneNo' class='label notice'>Broadcast</span>
-				<span id='time' class='label success'>@ 10:15:58</span>
-			</div>
-			<div id='two'>
-				this is an broadcast
-			</div>
-			<div id='three'>
-				<span id='tam' class='label'>text as me</span>
-			</div>
-			<div style='clear: both'></div>
-		</div>
-
 	</div>
 
 	<div id='sender'>
@@ -82,6 +41,59 @@
 		</div>
 		<button id='btnSend'>Send</button>
 		<div style='clear: both'></div>
+	</div>
+
+</div>
+
+<!-- Mustache Templates for Stream SMS type -->
+<div style='width: 700px; display: none'>
+	
+	<div id='sms_mt'>
+		<div class='sms'>
+			<div id='one'>
+				<span id='phoneNo' class='label warning'>To: ${m_start}address${m_end}</span>
+				<span id='time' class='label success'>@ ${m_start}time${m_end}</span>
+			</div>
+			<div id='two'>
+				${m_start}message${m_end}
+			</div>
+			<div id='three'>
+				<span id='tam' class='label' onclick = 'tam("${m_start}address${m_end}")'>text as me</span>
+			</div>
+			<div style='clear: both'></div>
+		</div>
+	</div>
+
+	<div id='sms_mo'>
+		<div class='sms'>
+			<div id='one'>
+				<span id='phoneNo' class='label important'>From: ${m_start}address${m_end}</span>
+				<span id='time' class='label success'>@ ${m_start}time${m_end}</span>
+			</div>
+			<div id='two'>
+				${m_start}message${m_end}
+			</div>
+			<div id='three'>
+				<span id='tam' class='label' onclick = 'tam("${m_start}address${m_end}")'>text as me</span>
+			</div>
+			<div style='clear: both'></div>
+		</div>
+	</div>
+
+	<div id='sms_broadcast'>
+		<div class='sms'>
+			<div id='one'>
+				<span id='phoneNo' class='label notice'>Broadcast</span>
+				<span id='time' class='label success'>@ ${m_start}time${m_end}</span>
+			</div>
+			<div id='two'>
+				${m_start}message${m_end}
+			</div>
+			<div id='three'>
+				<span id='tam' class='label' onclick = 'tam("${m_start}address${m_end}")'>text as me</span>
+			</div>
+			<div style='clear: both'></div>
+		</div>
 	</div>
 
 </div>
