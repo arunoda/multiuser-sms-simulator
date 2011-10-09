@@ -12,6 +12,7 @@
 	<script src="/js/mustache.js"></script>
 	<script src="/js/jquery-1.6.4.min.js"></script>
 	<script src="/js/main.js"></script>
+	<script src="/js/controller.js"></script>
 </head>
 <body>
 
@@ -20,12 +21,17 @@
 		<img src='/images/logo.png' align='center'/>
 	</div>
 	<div id='cpanel'>
-		<div id='txtSms'>SMS Log</div>
+		<div id='txtSms'>SMS Log Stream</div>
+		<button id='btnclear'>Clear</button>
 		<select id='filterBy'> 
 			<option value='none'>None</option>
 		</select>
 		<div id='txtFilterBy'>Filter By</div>
 		<div style='clear: both'></div>
+		<div id='hideMo'>
+			<input type="checkbox" name="hideMo" value=true />
+			Show only Receiving messages
+		</div>
 	</div>
 
 	<div id='stream'>
@@ -51,14 +57,14 @@
 	<div id='sms_mt'>
 		<div class='sms'>
 			<div id='one'>
-				<span id='phoneNo' class='label warning'>To: ${m_start}address${m_end}</span>
+				<span id='phoneNo' class='label warning' onclick='doFilter("${m_start}address${m_end}")'>To: ${m_start}address${m_end}</span>
 				<span id='time' class='label success'>@ ${m_start}time${m_end}</span>
 			</div>
 			<div id='two'>
 				${m_start}message${m_end}
 			</div>
 			<div id='three'>
-				<span id='tam' class='label' onclick = 'tam("${m_start}address${m_end}")'>text as me</span>
+				<span id='textAsMe' class='label' onclick = 'textAsMe("${m_start}address${m_end}")'>text as me</span>
 			</div>
 			<div style='clear: both'></div>
 		</div>
@@ -67,14 +73,14 @@
 	<div id='sms_mo'>
 		<div class='sms'>
 			<div id='one'>
-				<span id='phoneNo' class='label important'>From: ${m_start}address${m_end}</span>
+				<span id='phoneNo' class='label important' onclick='doFilter("${m_start}address${m_end}")'>From: ${m_start}address${m_end}</span>
 				<span id='time' class='label success'>@ ${m_start}time${m_end}</span>
 			</div>
 			<div id='two'>
 				${m_start}message${m_end}
 			</div>
 			<div id='three'>
-				<span id='tam' class='label' onclick = 'tam("${m_start}address${m_end}")'>text as me</span>
+				<span id='textAsMe' class='label' onclick = 'textAsMe("${m_start}address${m_end}")'>text as me</span>
 			</div>
 			<div style='clear: both'></div>
 		</div>
@@ -90,7 +96,6 @@
 				${m_start}message${m_end}
 			</div>
 			<div id='three'>
-				<span id='tam' class='label' onclick = 'tam("${m_start}address${m_end}")'>text as me</span>
 			</div>
 			<div style='clear: both'></div>
 		</div>

@@ -37,6 +37,7 @@ body {
 }
 
 #cpanel #txtSms{
+	margin:2px 0px 0px 0px;
 	float: left;
 }
 
@@ -54,10 +55,21 @@ body {
 	margin-left: 10px;
 }
 
+#cpanel #btnClear{
+	margin:0px 0px 0px 10px;
+	float: left;
+	font-size: 20px;
+}
+
+#cpanel #hideMo {
+	margin-top: 5px;
+	font-size: 14px;
+}
+
 /********** STREAM */
 
 #stream {
-	margin: 20px 0px 20px 0px;
+	margin: 15px 0px 20px 0px;
 	background-color: #f4f8fc;
 	border: 1px solid rgb(220, 220, 220);
 	padding: 8px;
@@ -78,7 +90,7 @@ body {
 	color: rgb(75, 75, 75);
 }
 
-#sender #keypad textarea{
+#sender #keypad textarea {
 	float: left;
 	height: 55px;
 	width: 580px;
@@ -111,11 +123,9 @@ body {
 	width: 200px;
 }
 
-/*.sms #one #phoneNo {
-	text-align:center;
-	background-color: #7cd583;
-	padding:2px;
-}*/
+.sms #one #phoneNo {
+	cursor: pointer;
+}
 
 
 .sms #two {
@@ -128,7 +138,7 @@ body {
 	float: right;
 }
 
-.sms #tam {
+.sms #textAsMe {
 	cursor: pointer;
 }
 /***** LABEL **/

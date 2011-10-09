@@ -1,6 +1,6 @@
 //Core Communication Functions
 
-function SMS() {
+function SmsServer() {
 	
 	var events = new EventEmitter2({
 		wildcard: true, 
@@ -162,21 +162,23 @@ function SmsStore(limit) {
 
 /******* STREAM **/
 
-function Stream(streamId, mtDiv, moDiv, broadcatDiv) {
+function Stream(streamId, mtDiv, moDiv, broadcastDiv) {
 	
 	streamId = (streamId)? streamId: 'stream';
 	mtDiv = (mtDiv)? mtDiv: 'sms_mt';
 	moDiv = (moDiv)? moDiv: 'sms_mo';
-	broadcatDiv = (broadcatDiv)? broadcatDiv: 'sms_broadcast';
-
+	broadcastDiv = (broadcastDiv)? broadcastDiv: 'sms_broadcast';
+	
+	//whether to hide MO or not
+	var	hideMo = false;
 	var filter = null;
 
-	this.addMessage = function(sms) {
+	this.addSms = function(sms) {
 		
 		//do filtering
-		if(sms && sms.address != filter) {
+		if(sms && ((sms.address == filter) || !filter)) {
 			
-			if(sms.type == 'MO') {
+			if(sms.type == 'MO' && !hideMo) {
 
 				var tmpl = $('#' + moDiv).html();
 				var html = Mustache.to_html(tmpl, {
@@ -185,8 +187,30 @@ function Stream(streamId, mtDiv, moDiv, broadcatDiv) {
 					time: getTimeStr(sms.time)
 				});
 				$('#' + streamId).prepend(html);
+
+			} else if(sms.type == 'MT' && sms.address.toLowerCase() == 'broadcast') {
+				
+				var tmpl = $('#' + broadcastDiv).html();
+				var html = Mustache.to_html(tmpl, {
+					message: sms.message,
+					time: getTimeStr(sms.time)
+				});
+				$('#' + streamId).prepend(html);
+			} else if(sms.type == 'MT') {
+				
+				var tmpl = $('#' + mtDiv).html();
+				var html = Mustache.to_html(tmpl, {
+					address: sms.address,
+					message: sms.message,
+					time: getTimeStr(sms.time)
+				});
+				$('#' + streamId).prepend(html);
 			}
 		}
+	};
+
+	this.hideMo = function(value) {
+		hideMo = value;
 	};
 
 	this.clear = function() {
@@ -199,6 +223,10 @@ function Stream(streamId, mtDiv, moDiv, broadcatDiv) {
 
 	this.clearFilter = function() {
 		filter = null;
+	};
+
+	this.getFilter = function() {
+		return filter;	
 	};
 
 	function getTimeStr(timestamp) {
