@@ -63,6 +63,16 @@ function publishSendMo() {
 	if(address) address.trim();
 	if(message) message.trim();
 
+	if(!address || !address.trim()) {
+		$('#sender #phoneNo input').focus();
+		return;
+	} else if(!message || !message.trim()) {
+		setTimeout(function() {
+			$('#sender #keypad textarea').val('').focus();
+		}, 0);
+		return;
+	}
+
 	//add to Store
 	smsStore.addSmsMo(address, message);
 
@@ -83,7 +93,7 @@ function publishSendMo() {
 	//focus textarea again
 	setTimeout(function() {
 		$('#sender #keypad textarea').val('').focus();
-	}, 10);
+	}, 0);
 }
 
 

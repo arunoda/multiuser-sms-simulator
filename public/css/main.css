@@ -127,10 +127,14 @@ body {
 	cursor: pointer;
 }
 
+.sms #one #textAsMe {
+	margin-top: 8px;
+}
+
 
 .sms #two {
 	float: left;
-	width: 380px;
+	width: 440px;
 	color: rgb(75, 75, 75);
 }
 

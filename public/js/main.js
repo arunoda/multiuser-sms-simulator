@@ -143,10 +143,10 @@ function SmsStore(limit) {
 
 			if(arr[index]) {
 				arrNew.push(arr[index]);
-			} else {
-				return arrNew;
 			}
 		}
+
+		return arrNew;
 	}
 
 	function generateArray() {

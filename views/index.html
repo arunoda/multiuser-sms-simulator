@@ -40,7 +40,7 @@
 
 	<div id='sender'>
 		<div id='phoneNo'>
-			<input type='text'/>
+			<input type='text' maxlength="10" />
 		</div>
 		<div id='keypad'>
 			<textarea ></textarea>
@@ -59,12 +59,12 @@
 			<div id='one'>
 				<span id='phoneNo' class='label warning' onclick='doFilter("${m_start}address${m_end}")'>To: ${m_start}address${m_end}</span>
 				<span id='time' class='label success'>@ ${m_start}time${m_end}</span>
+				<div id='textAsMe'>
+					<span class='label' onclick = 'textAsMe("${m_start}address${m_end}")'>text as me</span>
+				</div>
 			</div>
 			<div id='two'>
 				${m_start}message${m_end}
-			</div>
-			<div id='three'>
-				<span id='textAsMe' class='label' onclick = 'textAsMe("${m_start}address${m_end}")'>text as me</span>
 			</div>
 			<div style='clear: both'></div>
 		</div>
@@ -75,12 +75,12 @@
 			<div id='one'>
 				<span id='phoneNo' class='label important' onclick='doFilter("${m_start}address${m_end}")'>From: ${m_start}address${m_end}</span>
 				<span id='time' class='label success'>@ ${m_start}time${m_end}</span>
+				<div id='textAsMe'>
+					<span class='label' onclick = 'textAsMe("${m_start}address${m_end}")'>text as me</span>
+				</div>
 			</div>
 			<div id='two'>
 				${m_start}message${m_end}
-			</div>
-			<div id='three'>
-				<span id='textAsMe' class='label' onclick = 'textAsMe("${m_start}address${m_end}")'>text as me</span>
 			</div>
 			<div style='clear: both'></div>
 		</div>
