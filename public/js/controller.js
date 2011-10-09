@@ -104,7 +104,6 @@ $(function() {
 	$('#cpanel #filterBy').change(function() {
 		
 		var address = $(this).val();
-		console.log(address);
 
 		var smsList;
 		if(address == 'none') {
@@ -116,8 +115,6 @@ $(function() {
 			//set phone number to the address box
 			// $('#sender #phoneNo input').val(address);
 		}
-
-		console.log(smsList);
 		
 		//add to stream
 		stream.clear();
@@ -153,7 +150,6 @@ function addToFilterBy(address) {
 smsServer.on('sms.*', function(message) {
 	
 	var address = this.event.substr(4);
-	console.log('MT %s %s', address, message);
 
 	//add to Store
 	smsStore.addSmsMt(address, message);
@@ -173,7 +169,6 @@ smsServer.on('sms.*', function(message) {
 smsServer.on('broadcast', function(message) {
 	
 	var address = 'broadcast';
-	console.log('MT %s %s', address, message);
 
 	//add to Store
 	smsStore.addSmsMt(address, message);
