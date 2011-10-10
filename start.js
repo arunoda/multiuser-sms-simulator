@@ -1,11 +1,16 @@
+//load nconf
+var nconf = require('nconf');
+nconf.add('file', {file: './conf/config.json'});
+nconf.load();
+
 //load winstoon
 var winstoon = require('winstoon');
 winstoon.add(winstoon.transports.Console, {timestamp: true, colorize: true});
 var logger = winstoon.createLogger('start');
 
 //port loader
-var apiPort = process.argv[2];
-var simulatorPort = process.argv[3];
+var apiPort = nconf.get('ports:api');
+var simulatorPort = nconf.get('ports:simulator');
 
 //loadEventBus
 var EventEmitter = require('events').EventEmitter;
@@ -43,15 +48,3 @@ var simulator = new Simulator(simulatorServer, appStore, eventBus);
 //Client Handler
 var ClientHandler = require('./lib/clientHandler');
 var clientHandler = new ClientHandler(apiServer, eventBus, apiPort);
-
-// var jqtpl = require('jqtpl');
-// var fs = require('fs');
-// var filename = __dirname + '/views/index.html';
-// var view = fs.readFileSync(filename, 'utf8');
-// console.log(filename);
-// var data = jqtpl.tmpl(view, {port: apiPort});
-// apiServer.get('/view', function(req, res) {
-
-// 	console.log(apiServer);
-// 	res.send(data);
-// });
