@@ -27,10 +27,6 @@ function SmsServer() {
 
 	socket.on('MT', function(toAddress, message) {
 
-		console.log('%s ----- %s', toAddress, message);
-		console.log(toAddress);
-		console.log(message);
-
 		if(toAddress == 'all_registered') {
 			//broadcast
 			events.emit('broadcast', message);
