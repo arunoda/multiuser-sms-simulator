@@ -12,7 +12,7 @@ function SmsServer() {
 
 	this.sendMo = function sendMo(myAddress, message) {
 		
-		socket.emit('MO', appId, myAddress, message);
+		socket.emit('MO', myAddress, message);
 	}
 
 	/**
@@ -25,7 +25,11 @@ function SmsServer() {
 		events.on.apply(events, arguments);	
 	};
 
-	socket.on(appId, function(toAddress, message) {
+	socket.on('MT', function(toAddress, message) {
+
+		console.log('%s ----- %s', toAddress, message);
+		console.log(toAddress);
+		console.log(message);
 
 		if(toAddress == 'all_registered') {
 			//broadcast
