@@ -2,7 +2,5 @@
 	"ports": {
 		"api": 4050,
 		"simulator": 4051
-	},
-	
-	"hostname": "localhost"
+	}
 }

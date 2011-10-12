@@ -6,7 +6,7 @@
 	<script src="/socket.io/socket.io.js"></script>
 	<script>
 		var appId = '${appId}';
-		var socket = io.connect('http://${hostname}:${port}');
+		var socket = io.connect();
 		socket.emit('appId', appId);
 	</script>
 	<script src="/js/ev2.js"></script>
