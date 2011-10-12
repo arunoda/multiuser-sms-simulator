@@ -5,7 +5,7 @@ nconf.load();
 
 //load winstoon
 var winstoon = require('winstoon');
-winstoon.add(winstoon.transports.Console, {timestamp: true, colorize: true});
+winstoon.add(winstoon.transports.Console, {timestamp: true});
 var logger = winstoon.createLogger('start');
 
 //port loader
