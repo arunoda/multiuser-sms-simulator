@@ -60,6 +60,9 @@ function publishSendMo() {
 	var address = $('#sender #phoneNo input').val();
 	var message = $('#sender #keypad textarea').val();
 
+	//add keyword to the begin
+	message  = "keyword " + message;
+
 	if(address) address.trim();
 	if(message) message.trim();
 
@@ -84,6 +87,7 @@ function publishSendMo() {
 		time: new Date()
 	});
 
+	console.log(message);
 	//send to Server
 	smsServer.sendMo(address, message);
 
