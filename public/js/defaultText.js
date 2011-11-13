@@ -1,37 +1,46 @@
 $(function() {
 	
-	setTimeout(function() {
+	$.defaultText('#sender #phoneNo input', 'enter your phone no')
+	$.defaultText('#sender #keypad textarea', 'enter your message here')
+
+});
+
+(function($) {
+	
+	$.defaultText = function(cssDiv, value) {
 		
-		$('#sender #phoneNo input').val('enter your phone no');
-		$('#sender #phoneNo input').keypress(function() {
+		$(cssDiv).val(value);
+		$(cssDiv).keypress(function() {
 			var text = $(this).val();
-			if(text == 'enter your phone no') {
+			if(text == value) {
 				$(this).val('');
 			}
 		});
-		$('#sender #phoneNo input').focus(function() {
-			$(this).val('');
-		});
 
-		$('#sender #phoneNo input').blur(function() {
+		$(cssDiv).focus(function() {
 			var text = $(this).val();
-			if(!text || text.trim() == "") {
-				$(this).val('enter your phone no');
+			if(text == value) {
+				$(this).val('');
 			}
 		});
 
-
-		$('#sender #keypad textarea').val('enter your message here');
-		$('#sender #keypad textarea').focus(function() {
-			$(this).val('');
-		});
-		$('#sender #keypad textarea').blur(function() {
+		$(cssDiv).click(function() {
 			var text = $(this).val();
-			if(!text || text.trim() == "") {
-				$(this).val('enter your message here');
+			if(text == value) {
+				$(this).val('');
 			}
 		});
-		
-	}, 100);
 
-});
+		$(cssDiv).blur(function() {
+			var text = $(this).val();
+			if(!text || text.trim() == "") {
+				$(this).val(value);
+			}
+		});
+
+		function clearText() {
+			
+		}
+	};
+
+})(jQuery)
