@@ -55,6 +55,20 @@ $(function() {
 
 });
 
+//Register and Unregister
+$(function() {
+
+	$('#sender #register').click(function() {
+		var address = $('#sender #phoneNo input').val();
+		smsServer.sendMo(address, 'REG appname');
+	});
+
+	$('#sender #unregister').click(function() {
+		var address = $('#sender #phoneNo input').val();
+		smsServer.sendMo(address, 'UNREG appname');
+	});
+});
+
 function publishSendMo() {
 
 	var address = $('#sender #phoneNo input').val();
