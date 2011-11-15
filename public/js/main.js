@@ -178,6 +178,7 @@ function Stream(streamId, mtDiv, moDiv, broadcastDiv) {
 		//do filtering
 		if(sms && ((sms.address == filter) || !filter)) {
 			
+			sms.message = sms.message.trim().replace(/\n/g, '[[NL]]').replace(/\t/g, '[[TAB]]');
 			if(sms.type == 'MO' && !hideMo) {
 
 				var tmpl = $('#' + moDiv).html();
@@ -186,7 +187,8 @@ function Stream(streamId, mtDiv, moDiv, broadcastDiv) {
 					message: sms.message,
 					time: getTimeStr(sms.time)
 				});
-				$('#' + streamId).prepend(html);
+
+				prependToStream(html);
 
 			} else if(sms.type == 'MT' && sms.address.toLowerCase() == 'broadcast') {
 				
@@ -195,7 +197,8 @@ function Stream(streamId, mtDiv, moDiv, broadcastDiv) {
 					message: sms.message,
 					time: getTimeStr(sms.time)
 				});
-				$('#' + streamId).prepend(html);
+				prependToStream(html);
+
 			} else if(sms.type == 'MT') {
 				
 				var tmpl = $('#' + mtDiv).html();
@@ -204,10 +207,15 @@ function Stream(streamId, mtDiv, moDiv, broadcastDiv) {
 					message: sms.message,
 					time: getTimeStr(sms.time)
 				});
-				$('#' + streamId).prepend(html);
+				prependToStream(html);
 			}
 		}
 	};
+
+	function prependToStream(html) {
+		html = html.replace(/\[\[NL\]\]/g, '<br/>').replace(/\[\[TAB\]\]/g, '&nbsp&nbsp&nbsp&nbsp');
+		$('#' + streamId).prepend(html);
+	}
 
 	this.hideMo = function(value) {
 		hideMo = value;
