@@ -101,7 +101,6 @@ function publishSendMo() {
 		time: new Date()
 	});
 
-	console.log(message);
 	//send to Server
 	smsServer.sendMo(address, message);
 
