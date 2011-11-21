@@ -178,7 +178,7 @@ function Stream(streamId, mtDiv, moDiv, broadcastDiv) {
 		//do filtering
 		if(sms && ((sms.address == filter) || !filter)) {
 			
-			sms.message = sms.message.trim().replace(/\n/g, '[[NL]]').replace(/\t/g, '[[TAB]]');
+			sms.message = sms.message.replace(/ /g, '[[SPACE]]').replace(/\n/g, '[[NL]]').replace(/\t/g, '[[TAB]]');
 			if(sms.type == 'MO' && !hideMo) {
 
 				var tmpl = $('#' + moDiv).html();
@@ -214,6 +214,7 @@ function Stream(streamId, mtDiv, moDiv, broadcastDiv) {
 
 	function prependToStream(html) {
 		html = html.replace(/\[\[NL\]\]/g, '<br/>').replace(/\[\[TAB\]\]/g, '&nbsp&nbsp&nbsp&nbsp');
+		html = html.replace(/\[\[SPACE\]\]/g, '&nbsp');
 		$('#' + streamId).prepend(html);
 	}
 

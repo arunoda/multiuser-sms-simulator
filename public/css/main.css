@@ -142,6 +142,7 @@ body {
 	float: left;
 	width: 440px;
 	color: rgb(75, 75, 75);
+	font-family:monospace;
 }
 
 .sms #three {
