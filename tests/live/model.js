@@ -11,12 +11,12 @@ exports.testRegisterAppCode = function(test) {
         var phoneCollection = mongo.db.collection('phone');
         var model = new Model(appCollection, phoneCollection);
 
-        model.registerAppCode('code', 'url', function(err) {
+        model.registerAppCode('code56', 'url', 'app-id', function(err) {
             
             test.ok(!err);
-            appCollection.findOne(function(err, item) {
+            appCollection.findOne({_id: 'code56'}, function(err, item) {
                 test.ok(!err);
-                test.deepEqual({_id: 'code' ,url: 'url'}, item);
+                test.deepEqual({_id: 'code56' ,url: 'url', appId: 'app-id'}, item);
                 test.done(); 
             });
         });
@@ -35,7 +35,7 @@ exports.testRegisterPhone = function(test) {
         var phoneCollection = mongo.db.collection('phone');
         var model = new Model(appCollection, phoneCollection);
 
-        model.registerAppCode('code2', 'url2', function(err) {
+        model.registerAppCode('code2', 'url2', 'appId', function(err) {
             
             test.ok(!err);
             model.registerPhone('5566', 'code2', function(err2, resp) {
@@ -95,7 +95,7 @@ exports.testDeRegisterPhone = function(test) {
         var phoneCollection = mongo.db.collection('phone');
         var model = new Model(appCollection, phoneCollection);
 
-        model.registerAppCode('code2', 'url2', function(err) {
+        model.registerAppCode('code2', 'url2', 'appId', function(err) {
             
             test.ok(!err);
             model.registerPhone('5566', 'code2', function(err2, resp) {
@@ -143,7 +143,7 @@ exports.testGetAppUrlbyPhone = function(test) {
         var phoneCollection = mongo.db.collection('phone');
         var model = new Model(appCollection, phoneCollection);
 
-        model.registerAppCode('code3', 'url3', function(err) {
+        model.registerAppCode('code3', 'url3', 'appId', function(err) {
             
             test.ok(!err);
             model.registerPhone('5564', 'code3', function(err2, resp) {
@@ -172,7 +172,7 @@ exports.testGetAppUrlbyPhoneNoPhone = function(test) {
         var phoneCollection = mongo.db.collection('phone');
         var model = new Model(appCollection, phoneCollection);
 
-        model.registerAppCode('code3', 'url3', function(err) {
+        model.registerAppCode('code3', 'url3', 'appId', function(err) {
             
             test.ok(!err);
             model.getAppUrlByPhone('5566', function(err3, resp) {
@@ -196,7 +196,7 @@ exports.testGetPhonesByAppCode = function(test) {
         var phoneCollection = mongo.db.collection('phone');
         var model = new Model(appCollection, phoneCollection);
 
-        model.registerAppCode('code3', 'url3', function(err) {
+        model.registerAppCode('code3', 'url3', 'appId', function(err) {
             
             test.ok(!err);
             model.registerPhone('2000', 'code3', function(err2, resp) {
@@ -214,6 +214,58 @@ exports.testGetPhonesByAppCode = function(test) {
                         test.done();
                     });
                 });
+            });
+        });
+
+    })), function() {
+        console.log('mongo is not started');
+        test.done();
+    });
+};
+
+
+//---
+
+
+exports.testGetAppCodeByAppId = function(test) {
+
+    mongo.isStarted(mongo.ensureDeleted("eee", mongo.ensureDeleted("fff", function() {
+
+        var appCollection = mongo.db.collection('eee');
+        var phoneCollection = mongo.db.collection('fff');
+        var model = new Model(appCollection, phoneCollection);
+
+        model.registerAppCode('code3', 'url3', 'app-id', function(err) {
+            
+            test.ok(!err);
+            model.getAppCodeByAppId('app-id', function(err3, resp) {
+                test.ok(!err3);
+                test.equal(resp, 'code3');
+                test.done();
+            });
+        });
+
+    })), function() {
+        console.log('mongo is not started');
+        test.done();
+    });
+};
+
+exports.testGetAppCodeByAppIdNoPhone = function(test) {
+
+    mongo.isStarted(mongo.ensureDeleted("aaa", mongo.ensureDeleted("bbb", function() {
+
+        var appCollection = mongo.db.collection('app');
+        var phoneCollection = mongo.db.collection('phone');
+        var model = new Model(appCollection, phoneCollection);
+
+        model.registerAppCode('code3', 'url3', 'appId', function(err) {
+            
+            test.ok(!err);
+            model.getAppCodeByAppId('5566', function(err3, resp) {
+                test.ok(!err3);
+                test.equal(resp, false);
+                test.done();
             });
         });
 
