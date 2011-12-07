@@ -45,6 +45,18 @@ Your application can access the UI via
 Eg:-
 	http://localhost:4050/view/640ce65af0bcf665c434cd3e869e757c
 
+
+### Get Ap Code
+With an appcode you can work with this simulator using a actual phone
+
+url: http://hostname:port
+path: /code
+params: appId (appId get when setup)
+
+#### returns
+{code: 'the app code'}
+
+
 Simulator
 ---------
 This works as an full featured Appzone.lk compatible SMS server.
