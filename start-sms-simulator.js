@@ -20,6 +20,31 @@ var eventBus = new EventEmitter();
 var AppStore = require('./lib/appStore');
 var appStore = new AppStore();
 
+////// load live test //////
+
+//load mongo
+var mongo = require('mongoskin');
+var mongoConfig = nconf.get('live:mongo');
+
+var appCollection = mongo.db(mongoConfig.url).collection(mongoConfig.collections.app);
+var phoneCollection = mongo.db(mongoConfig.url).collection(mongoConfig.collections.phone);
+
+//load the model
+var Model = require('./lib/live/model');
+var liveModel = new Model(appCollection, phoneCollection);
+
+//load Routers
+var appzoneConfig = nconf.get('live:appzone');
+var ports = nconf.get('live:ports');
+
+var MtRouter = require('./lib/live/mtRouter');
+var mtRouter = new MtRouter(appzoneConfig, liveModel, eventBus);
+
+var MoRouter = require('./lib/live/moRouter');
+var moRouter = new MoRouter(appzoneConfig, ports.mo, liveModel, eventBus);
+
+///// End loading live test /////
+
 //load apiServer
 var express = require('express');
 var apiServer = express.createServer();
@@ -39,7 +64,7 @@ logger.info('Simulator Server started', {port: simulatorPort})
 
 //load SetupMan
 var SetupMan = require('./lib/setupMan');
-var setupMan = new SetupMan(apiServer, appStore);
+var setupMan = new SetupMan(apiServer, appStore, liveModel);
 
 //load Simulator
 var Simulator = require('./lib/simulator');
@@ -48,3 +73,6 @@ var simulator = new Simulator(simulatorServer, appStore, eventBus);
 //Client Handler
 var ClientHandler = require('./lib/clientHandler');
 var clientHandler = new ClientHandler(apiServer, eventBus, apiPort);
+
+/////////////////////////////////////////////
+

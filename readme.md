@@ -51,7 +51,7 @@ With an appcode you can work with this simulator using a actual phone
 
 url: http://hostname:port
 path: /code
-params: appId (appId get when setup)
+params: appUrl or appId
 
 #### returns
 {code: 'the app code'}

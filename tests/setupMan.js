@@ -83,6 +83,42 @@ exports.testGetCode = function(test) {
 	});
 };
 
+exports.testGetCodeFromAppUrl = function(test) {
+	
+	test.expect(2);
+
+	var appUrl = 'http://url.com';
+	var appId = md5(appUrl);
+
+	var app = express.createServer();
+	app.use(express.bodyParser());
+	app.listen(5051, function() {
+		
+		var modelMock = {
+			registerAppCode: function(appCode, appUrl_, appId, callback) {
+				test.equal(appUrl, appUrl_);
+				process.nextTick(function() {
+					callback(null);
+				});
+			}
+		};
+
+		var appStore = new AppStore();
+		appStore.saveEntry(appId, 'paas', appUrl);
+		var setupMan = new SetupMan(app, appStore, modelMock);
+
+		rest.post('http://localhost:5051/code', {
+
+			data: {appUrl: appUrl}
+		}).on('complete', function(data) {
+			
+			test.ok(data.code);
+			app.close();
+			test.done();
+		});
+	});
+};
+
 exports.testGetCodeInvalidAppId = function(test) {
 	
 	test.expect(1);
