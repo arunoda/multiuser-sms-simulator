@@ -11,6 +11,7 @@ var logger = winstoon.createLogger('start');
 //port loader
 var apiPort = nconf.get('ports:api');
 var simulatorPort = nconf.get('ports:simulator');
+var clientPort = nconf.get('ports:client');
 
 //loadEventBus
 var EventEmitter = require('events').EventEmitter;
@@ -70,9 +71,14 @@ var setupMan = new SetupMan(apiServer, appStore, liveModel);
 var Simulator = require('./lib/simulator');
 var simulator = new Simulator(simulatorServer, appStore, eventBus);
 
+var clientServer = express.createServer();
+clientServer.use(express.bodyParser());
+clientServer.listen(clientPort);
+logger.info('Client Server started', {port: clientPort})
+
 //Client Handler
 var ClientHandler = require('./lib/clientHandler');
-var clientHandler = new ClientHandler(apiServer, eventBus, apiPort);
+var clientHandler = new ClientHandler(clientServer, eventBus, apiPort);
 
 /////////////////////////////////////////////
 
