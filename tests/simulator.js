@@ -5,9 +5,9 @@ var appzone = require('appzone');
 var express = require('express');
 var rest = require('restler');
 var winstoon = require('winstoon');
-winstoon.add(winstoon.transports.Console);
+// winstoon.add(winstoon.transports.Console);
 
-exports.testAppzoneSendSms = function(test) {
+exports.testAppzoneSendSmsToUI = function(test) {
 	
 	test.expect(5);
 	var appStore = new AppStore();
@@ -17,7 +17,7 @@ exports.testAppzoneSendSms = function(test) {
 
 	app.listen(6090, function() {
 		
-		eventBus.on('sms', function(appId, address, message) {
+		eventBus.on('MT-UI', function(appId, address, message) {
 
 			test.equal(appId, 'app');
 			test.equal(address, '07223434');
@@ -38,7 +38,7 @@ exports.testAppzoneSendSms = function(test) {
 	});	
 };
 
-exports.testAppzoneSendBroadcast = function(test) {
+exports.testAppzoneSendSmsToPhone = function(test) {
 	
 	test.expect(5);
 	var appStore = new AppStore();
@@ -48,7 +48,45 @@ exports.testAppzoneSendBroadcast = function(test) {
 
 	app.listen(6090, function() {
 		
-		eventBus.on('sms', function(appId, address, message) {
+		eventBus.on('MT-PHONE', function(appId, address, message) {
+
+			test.equal(appId, 'app');
+			test.equal(address, 'AZ110qxx/Yz9xk9UYWSlymv7G9E9/ClzLE4OB');
+			test.equal(message, 'message');
+		});
+
+		appStore.saveEntry('app', 'pass', 'url');
+		var simulator = new Simulator(app, appStore, eventBus);
+
+		var sender = appzone.sender('http://localhost:6090/sms', 'app', 'pass', 10);
+		sender.sendSms('AZ110qxx/Yz9xk9UYWSlymv7G9E9/ClzLE4OB', 'message', function(err, resp) {
+		    
+		    test.ok(!err);
+		    test.ok(resp);
+		    app.close();
+		    test.done();
+		});
+	});	
+};
+
+exports.testAppzoneSendBroadcast = function(test) {
+	
+	test.expect(8);
+	var appStore = new AppStore();
+	var eventBus = new EventEmitter();
+	var app = express.createServer();
+	app.use(express.bodyParser());
+
+	app.listen(6090, function() {
+		
+		eventBus.on('MT-UI', function(appId, address, message) {
+
+			test.equal(appId, 'app');
+			test.equal(address, 'all_registered');
+			test.equal(message, 'message');
+		});
+
+		eventBus.on('MT-PHONE', function(appId, address, message) {
 
 			test.equal(appId, 'app');
 			test.equal(address, 'all_registered');
@@ -79,7 +117,7 @@ exports.testAppzoneSendWrongAuth = function(test) {
 
 	app.listen(6090, function() {
 		
-		eventBus.on('sms', function(appId, address, message) {
+		eventBus.on('MT-UI', function(appId, address, message) {
 
 			test.fail();
 		});
@@ -112,7 +150,7 @@ exports.testAppzoneSendWrongBody = function(test) {
 
 	app.listen(6090, function() {
 		
-		eventBus.on('sms', function(appId, address, message) {
+		eventBus.on('MT-UI', function(appId, address, message) {
 
 			test.fail();
 		});

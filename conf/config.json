@@ -2,5 +2,26 @@
 	"ports": {
 		"api": 4050,
 		"simulator": 4051
+	},
+
+	"live": {
+
+		"mongo": {
+			"url": "localhost:27017/live-test",
+			"collections": {
+				"app": "app",
+				"phone": "phone"
+			}
+		}, 
+
+		"ports": {
+			"mo": 11111
+		},
+
+		"appzone": {
+			"url": "http://localhost:8008/simulator",
+			"appId": "app",
+			"password": "pass"
+		}
 	}
 }
