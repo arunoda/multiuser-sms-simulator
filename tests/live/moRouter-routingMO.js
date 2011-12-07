@@ -8,6 +8,7 @@ exports.testRouteMOBasic = function(test) {
 
 	var address = '45445';
 	var message = 'hello message';
+	var appId = 'app-id';
 
 	var onSmsMock = nodemock.mock('onSms').takes(function() {});
 	onSmsMock.calls(0, [{
@@ -19,27 +20,20 @@ exports.testRouteMOBasic = function(test) {
 		return onSmsMock;
 	});
 
-	var modelMock = nodemock.mock('getAppUrlByPhone').takes(address, function() {}).calls(1, [null, 'http://localhost:9076/app']);
+	var modelMock = nodemock.mock('getAppIdByPhone').takes(address, function() {}).calls(1, [null, appId]);
+	var eventBus = nodemock.mock('emit').takes('MO', appId, address, message);
 
-	var app = express.createServer();
-	app.listen(9076, function() {
-		
-		var moRouter = new MoRouter({}, 8090, modelMock);
-	});
+	var moRouter = new MoRouter({}, 8090, modelMock, eventBus);
 
-	app.use(express.bodyParser());
-	app.post('/app', function(req, res) {
-		
-		test.deepEqual(req.body, {address: address, message: message});
-		test.ok(onSmsMock.assert());
-		test.ok(modelMock.assert());
+	test.ok(onSmsMock.assert());
+	test.ok(modelMock.assert());
+	test.ok(eventBus.assert());
 
-		test.done();
-		appzone.restore('receiver');
-	});
+	test.done();
+	appzone.restore('receiver');
 };
 
-exports.testRouteMONoUrl= function(test) {
+exports.testRouteMONoAppId= function(test) {
 	
 	var address = '45445';
 	var message = 'dfdfdf';
@@ -60,7 +54,7 @@ exports.testRouteMONoUrl= function(test) {
 		return onSmsMock;
 	});
 
-	var modelMock = nodemock.mock('getAppUrlByPhone').takes(address, function() {}).calls(1, [null, null]);
+	var modelMock = nodemock.mock('getAppIdByPhone').takes(address, function() {}).calls(1, [null, null]);
 	var moRouter = new MoRouter({}, 8090, modelMock);
 
 	setTimeout(function() {
@@ -97,7 +91,7 @@ exports.testRouteMOBasicError = function(test) {
 		return onSmsMock;
 	});
 
-	var modelMock = nodemock.mock('getAppUrlByPhone').takes(address, function() {}).calls(1, [{error: true}]);
+	var modelMock = nodemock.mock('getAppIdByPhone').takes(address, function() {}).calls(1, [{error: true}]);
 	var moRouter = new MoRouter({}, 8090, modelMock);
 
 	setTimeout(function() {
