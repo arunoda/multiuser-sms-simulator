@@ -1,7 +1,8 @@
 {
 	"ports": {
 		"api": 4050,
-		"simulator": 4051
+		"simulator": 4051,
+		"client": 4052
 	},
 
 	"live": {
