@@ -48,7 +48,8 @@ exports.testRegisterPhone = function(test) {
                     test.deepEqual(phone, {
                         _id: '5566',
                         appCode: 'code2',
-                        appUrl: 'url2'
+                        appUrl: 'url2',
+                        appId: 'appId'
                     });
                     test.done();
                 });
@@ -108,7 +109,8 @@ exports.testDeRegisterPhone = function(test) {
                     test.deepEqual(phone, {
                         _id: '5566',
                         appCode: 'code2',
-                        appUrl: 'url2'
+                        appUrl: 'url2',
+                        appId: 'appId'
                     });
                     
                     model.deregisterPhone('5566', afterDeregistered);
