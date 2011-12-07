@@ -225,6 +225,41 @@ exports.testGetPhonesByAppCode = function(test) {
     });
 };
 
+exports.testGetPhonesByAppId = function(test) {
+
+    mongo.isStarted(mongo.ensureDeleted("aaa", mongo.ensureDeleted("bbb", function() {
+
+        var appCollection = mongo.db.collection('app');
+        var phoneCollection = mongo.db.collection('phone');
+        var model = new Model(appCollection, phoneCollection);
+
+        model.registerAppCode('code3', 'url3', 'appId', function(err) {
+            
+            test.ok(!err);
+            model.registerPhone('2000', 'code3', function(err2, resp) {
+                test.ok(!err2);
+                test.ok(resp);
+
+                model.registerPhone('3000', 'code3', function(err2, resp) {
+                    test.ok(!err2);
+                    test.ok(resp);
+
+                    model.getPhonesByAppId('appId', function(err3, resp) {
+                        test.ok(!err3);
+                        test.ok(resp.indexOf('3000') >= 0);
+                        test.ok(resp.indexOf('2000') >= 0);
+                        test.done();
+                    });
+                });
+            });
+        });
+
+    })), function() {
+        console.log('mongo is not started');
+        test.done();
+    });
+};
+
 
 //---
 
